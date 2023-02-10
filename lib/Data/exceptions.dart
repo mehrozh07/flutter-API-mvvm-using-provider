@@ -34,3 +34,7 @@ class ServerSideExceptions extends AppException{
 class UnHandledExceptions extends AppException{
   UnHandledExceptions([String? message]) : super(message, "UnExpected behaviour");
 }
+
+class DataNotFoundExceptions extends AppException{
+  DataNotFoundExceptions([String? message]) : super(message, "Data Not Found");
+}

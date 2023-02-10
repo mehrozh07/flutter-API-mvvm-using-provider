@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.laravel_api_provider">
    <application
-        android:label="laravel_api_provider"
+        android:label="MVVM API"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
