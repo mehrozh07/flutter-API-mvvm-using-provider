@@ -67,6 +67,11 @@ class Utils{
     );
   }
 
+  static onNextFocus(context, FocusNode currentFocus, FocusNode nextFocus){
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
+  }
+
   static TextStyle headlineTextStyle = const TextStyle(
     fontSize: 18,
     color: Color(0xffCE1567),
