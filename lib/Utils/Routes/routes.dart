@@ -8,7 +8,7 @@ class Routes{
   static Route? onGenerateRoutes(RouteSettings settings){
     switch(settings.name){
       case RoutesNames.loginScreen:
-      Map arguments = (settings.arguments??{'title': "Home"}) as Map;
+      Map arguments = (settings.arguments??{'title': "Login"}) as Map;
         return CupertinoPageRoute(builder: (_)=> LoginView(
           title: arguments['title'],
         ));

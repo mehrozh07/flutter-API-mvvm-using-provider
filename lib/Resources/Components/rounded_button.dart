@@ -20,8 +20,12 @@ class RoundedButton extends StatelessWidget {
             padding: EdgeInsets.zero,
               onPressed: onTap,
               child: loading ?
-              const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              Transform.scale(
+                scale: 0.5,
+                child: const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  strokeWidth: 3,
+                ),
               ) :
               Text("$title"),
           ),

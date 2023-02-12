@@ -1,5 +1,7 @@
 class ApiEndPoint{
-  static var baseUrl = "http://";
+  static var baseUrl = "https://reqres.in";
 
-  static var loginUrl = "";
+  static var loginUrl = "$baseUrl/api/login";
+  static var registerUrl = "$baseUrl/api/register";
+
 }

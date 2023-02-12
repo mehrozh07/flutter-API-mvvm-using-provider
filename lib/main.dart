@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:laravel_api_provider/Utils/Routes/routes.dart';
+import 'package:laravel_api_provider/View-Models/auth_view_model.dart';
+import 'package:provider/provider.dart';
 import 'Utils/Routes/route_names.dart';
 import 'Utils/utils.dart';
 
@@ -18,7 +20,10 @@ Map<int, Color> color = {
 };
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_)=> AuthViewModel()),
+  ],
+  child: const MyApp()));
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -39,12 +44,13 @@ class MyApp extends StatelessWidget {
       title: 'Laravel Api',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: MaterialColor(0xffCE1567, color),
         primaryColor: const Color(0xffCE1567),
         useMaterial3: true,
         buttonTheme: ButtonThemeData(
           buttonColor: Utils.brandColor1,
         ),
+        colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: MaterialColor(0xffCE1567, color)).copyWith(background: Colors.white),
       ),
       initialRoute: RoutesNames.loginScreen,
       onGenerateRoute: Routes.onGenerateRoutes,

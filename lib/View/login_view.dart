@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:laravel_api_provider/Resources/Components/rounded_button.dart';
 import 'package:laravel_api_provider/Utils/utils.dart';
+import 'package:laravel_api_provider/View-Models/auth_view_model.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
   final String? title;
@@ -33,6 +35,9 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    final auth = Provider.of<AuthViewModel>(context);
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -42,94 +47,88 @@ class _LoginViewState extends State<LoginView> {
             centerTitle: true,
             backgroundColor: Theme.of(context).primaryColor,
           ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CupertinoTextField(
-              controller: emailController,
-              clearButtonMode: OverlayVisibilityMode.editing,
-              keyboardType: TextInputType.emailAddress,
-              placeholder: "email",
-              focusNode: emailFocusNode,
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              onSubmitted: (value){
-                Utils.onNextFocus(context, emailFocusNode, passwordFocusNode);
-              },
-              onChanged: (v) {
-                if (v.isEmpty) {
-                  Utils.topFlushBarMessage(
-                    "enter email",
-                      context,
-                      Utils.warningColor,
-                  );
-                }
-                return;
-              },
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 2.0,
-                  color: Theme.of(context).primaryColor,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  onFieldSubmitted: (value){
+                    Utils.onNextFocus(context, emailFocusNode, passwordFocusNode);
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Email",
+                    contentPadding: EdgeInsets.only(left: width * 0.03, right: 0, top: 0, bottom: 0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                    fillColor: const Color(0xffF3F3F3),
+                    filled: true,
+                  ),
                 ),
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-
-            ),
-            const SizedBox(height: 10),
-            CupertinoTextField(
-              controller: passwordController,
-              focusNode: passwordFocusNode,
-              obscureText: true,
-              obscuringCharacter: "*",
-              clearButtonMode: OverlayVisibilityMode.editing,
-              keyboardType: TextInputType.visiblePassword,
-              placeholder: "password",
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              onChanged: (v) {
-                if (v.isEmpty) {
-                  Utils.topFlushBarMessage(
-                    "enter password",
-                    context,
-                    Utils.warningColor,
-                  );
-                }
-                return;
-              },
-              autofocus: true,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 2.0,
-                  color: Theme.of(context).primaryColor,
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: passwordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  focusNode: passwordFocusNode,
+                  decoration: InputDecoration(
+                    hintText: "Password",
+                    contentPadding: EdgeInsets.only(left: width * 0.03, right: 0, top: 0, bottom: 0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                    fillColor: const Color(0xffF3F3F3),
+                    filled: true,
+                  ),
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Forgot Password?',
+                      style: Utils.coloredTextStyle,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.2,
+                ),
+              RoundedButton(
+                title: "Login",
+                  loading: auth.loader,
+                  onTap: (){
+                  if(emailController.text.isEmpty){
+                    Utils.topFlushBarMessage("please enter email", context, Utils.warningColor);
+                  }else if(passwordController.text.isEmpty){
+                    Utils.topFlushBarMessage("please enter password", context, Utils.warningColor);
+                  }else if(passwordController.text.length <6 ){
+                    Utils.topFlushBarMessage("password length should be grater than 6 characters",
+                        context, Utils.warningColor);
+                  }else{
+                     Map data = {
+                       "email": emailController.text.trim().toString(),
+                       "password": passwordController.text.trim().toString(),
+                     };
+                     auth.loginUser(context, data);
+                    if (kDebugMode) {
+                      print("api hit");
+                    }
+                   }
+                  },
               ),
-
+              ],
             ),
-          const SizedBox(height: 50),
-          RoundedButton(
-            title: "Login",
-              onTap: (){
-              if(emailController.text.isEmpty){
-                Utils.topFlushBarMessage("please enter email", context, Utils.warningColor);
-              }else if(passwordController.text.isEmpty){
-                Utils.topFlushBarMessage("please enter password", context, Utils.warningColor);
-              }else if(passwordController.text.length <6 ){
-                Utils.topFlushBarMessage("password length should be grater than 6 characters",
-                    context, Utils.warningColor);
-              }else{
-                Utils.topFlushBarMessage("Api hit",
-                    context, Utils.successColor);
-                if (kDebugMode) {
-                  print("api hit");
-                }
-              }
-              },
           ),
-          ],
         ),
       ),
     ));
