@@ -38,4 +38,13 @@ class AuthViewModel extends ChangeNotifier{
        debugPrint(error.toString());
      });
   }
+
+  Future<void> getNote(context) async{
+    await authRepo.getNoteApi(context).then((value){
+    // final result = value['items'] as Map;
+    }).onError((error, stackTrace){
+      Utils.topFlushBarMessage(error.toString(),context,  Utils.errorColor);
+      debugPrint(error.toString());
+    });
+  }
 }

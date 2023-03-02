@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:laravel_api_provider/View-Models/auth_view_model.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +10,13 @@ class HomeScreen extends StatelessWidget {
   final scaffoldState = GlobalKey<ScaffoldState>();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+  List items = [];
 
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthViewModel>(context);
+    auth.getNote(context);
+
     return SafeArea(
         child: Scaffold(
           key: scaffoldState,
@@ -25,17 +27,21 @@ class HomeScreen extends StatelessWidget {
               },
               label: const Text("add new note")),
           appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            centerTitle: true,
             title: Title(
                 color: Colors.black,
                 child: Text("$title")),
           ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-
-        ],
-      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(8),
+          itemCount: 12,
+          itemBuilder: (context, snapshot){
+        return Title(
+            color: Colors.black,
+            child: Text("$snapshot"),
+        );
+      }),
     ));
   }
 
@@ -47,55 +53,52 @@ class HomeScreen extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                TextField(
-                  controller: titleController,
-                  decoration: const InputDecoration(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              TextField(
+                controller: titleController,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)
+                  ),
+                  hintText: "add title",
+                  hintStyle: TextStyle(color: Colors.black45),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)
+                  )
+                ),
+              ),
+              TextField(
+                controller: descriptionController,
+                decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black)
                     ),
-                    hintText: "add title",
+                    hintText: "add description",
                     hintStyle: TextStyle(color: Colors.black45),
                     border: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)
+                        borderSide: BorderSide(color: Colors.black)
                     )
-                  ),
                 ),
-                TextField(
-                  controller: descriptionController,
-                  decoration: const InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)
-                      ),
-                      hintText: "add description",
-                      hintStyle: TextStyle(color: Colors.black45),
-                      border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)
-                      )
-                  ),
-                ),
+              ),
 
-                const SizedBox(height: 40),
-                TextButton(
-                  onPressed: (){
-                    Map data = {
-                      "title": titleController.text,
-                      "description": descriptionController.text,
-                      "is_completed": false,
-                    };
-                   authViewModel.addNote(context, jsonEncode(data));
-                  },
-                  child: const Text("Add"),
-                ),
-              ],
-            ),
+              const SizedBox(height: 40),
+              TextButton(
+                onPressed: (){
+                  Map data = {
+                    "title": titleController.text,
+                    "description": descriptionController.text,
+                    "is_completed": false,
+                  };
+                 authViewModel.addNote(context, jsonEncode(data));
+                },
+                child: const Text("Add"),
+              ),
+            ],
           ),
         ),
       );
     });
   }
-
 }

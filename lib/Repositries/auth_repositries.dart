@@ -34,4 +34,13 @@ Future<void> addNoteApi(context, dynamic data) async{
     }
 }
 
+  Future<void> getNoteApi(context) async{
+    try{
+      var response = baseApiResponseService.getFetchApiResponse(ApiEndPoint.getNotesApi);
+      return response;
+    }catch(e){
+      return Utils.flushBarMessage(context, e.toString(), Utils.warningColor);
+    }
+  }
+
 }
