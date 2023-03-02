@@ -103,7 +103,7 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(
                   height: height * 0.2,
                 ),
-              RoundedButton(
+                RoundedButton(
                 title: "Login",
                   loading: auth.loader,
                   onTap: (){

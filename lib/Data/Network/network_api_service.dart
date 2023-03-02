@@ -27,6 +27,10 @@ class NetworkApiResponse extends BaseApiResponseService{
       Response response = await http.post(
         Uri.parse(url!),
         body: data,
+        // header is used while communication with json type application
+        headers: {
+          "Content-Type": "application/json"
+        }
       ).timeout(const Duration(seconds: 10));
       postDataJson = returnResponse(response);
 
@@ -38,7 +42,7 @@ class NetworkApiResponse extends BaseApiResponseService{
 
   dynamic returnResponse(http.Response response){
     switch(response.statusCode){
-      case 200:
+      case 201:
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
       case 400:

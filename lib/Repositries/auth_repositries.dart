@@ -1,7 +1,6 @@
 import 'package:laravel_api_provider/Data/Network/base_api_service.dart';
 import 'package:laravel_api_provider/Resources/api_end_point.dart';
 import 'package:laravel_api_provider/Utils/utils.dart';
-
 import '../Data/Network/network_api_service.dart';
 
 class AuthRepositry{
@@ -25,4 +24,14 @@ class AuthRepositry{
       return Utils.flushBarMessage(context, e.toString(), Utils.warningColor);
     }
   }
+
+Future<void> addNoteApi(context, dynamic data) async{
+    try{
+      var response = baseApiResponseService.getPostApiResponse(ApiEndPoint.noteBaseApi, data);
+      return response;
+    }catch(e){
+      return Utils.flushBarMessage(context, e.toString(), Utils.warningColor);
+    }
+}
+
 }

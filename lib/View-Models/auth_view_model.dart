@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:laravel_api_provider/Repositries/auth_repositries.dart';
 import 'package:laravel_api_provider/Utils/Routes/route_names.dart';
 import 'package:laravel_api_provider/Utils/utils.dart';
@@ -26,5 +27,15 @@ class AuthViewModel extends ChangeNotifier{
       setLoading(false);
       Utils.topFlushBarMessage(error.toString(),context,  Utils.errorColor);
     });
+  }
+
+  Future<void> addNote(context, dynamic data) async{
+     authRepo.addNoteApi(context, data).then((value){
+       Navigator.pop(context);
+       Utils.topFlushBarMessage("Note added successfully",context,  Utils.successColor);
+     }).onError((error, stackTrace){
+       Utils.topFlushBarMessage(error.toString(),context,  Utils.errorColor);
+       debugPrint(error.toString());
+     });
   }
 }

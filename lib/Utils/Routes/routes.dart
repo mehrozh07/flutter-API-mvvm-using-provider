@@ -13,7 +13,7 @@ class Routes{
           title: arguments['title'],
         ));
       case RoutesNames.homePage:
-        Map arguments = (settings.arguments??{'title': "Home Screen"}) as Map;
+        Map arguments = (settings.arguments??{'title': "Notes App"}) as Map;
         return CupertinoPageRoute(builder: (_)=> HomeScreen(
           title: arguments['title'],
         ));
