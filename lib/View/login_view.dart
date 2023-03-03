@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:laravel_api_provider/Resources/Components/rounded_button.dart';
+import 'package:laravel_api_provider/Utils/Routes/route_names.dart';
 import 'package:laravel_api_provider/Utils/utils.dart';
 import 'package:laravel_api_provider/View-Models/auth_view_model.dart';
 import 'package:provider/provider.dart';
@@ -126,6 +125,23 @@ class _LoginViewState extends State<LoginView> {
                    }
                   },
               ),
+                SizedBox(
+                  height: height * 0.2,
+                ),
+                Wrap(
+                  children: [
+                     Text("Don't have an account?", style: Utils.simpleTitleStyle),
+                    SizedBox(
+                      width: width * 0.01,
+                    ),
+                    InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, RoutesNames.registerScreen);
+                      },
+                        child: Text("Sign Up",style: Utils.coloredTextStyle),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

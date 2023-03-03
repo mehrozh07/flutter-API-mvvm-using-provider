@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:laravel_api_provider/Utils/Routes/route_names.dart';
 import 'package:laravel_api_provider/View-Models/auth_view_model.dart';
+import 'package:laravel_api_provider/View-Models/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,6 +17,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthViewModel>(context);
+    final userAuth = Provider.of<UserViewModel>(context);
     auth.getNote(context);
 
     return SafeArea(
@@ -28,6 +31,15 @@ class HomeScreen extends StatelessWidget {
               label: const Text("add new note")),
           appBar: AppBar(
             backgroundColor: Theme.of(context).primaryColor,
+            actions: [
+              TextButton(
+                  onPressed: (){
+                    userAuth.removeUser().then((value){
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                      Navigator.pushReplacementNamed(context, RoutesNames.loginScreen);
+                    });
+              }, child: const Icon(Icons.logout, color: Colors.white,))
+            ],
             centerTitle: true,
             title: Title(
                 color: Colors.black,

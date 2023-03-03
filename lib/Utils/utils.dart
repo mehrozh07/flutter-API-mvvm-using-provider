@@ -77,6 +77,11 @@ class Utils{
     color: Color(0xffCE1567),
     fontWeight: FontWeight.bold,
   );
+  static TextStyle bigStyle = const TextStyle(
+    fontSize: 42,
+    color: Color(0xffCE1567),
+    fontWeight: FontWeight.bold,
+  );
   static TextStyle boldTextStyle = const TextStyle(
     fontSize: 26,
     color: Color(0xff38106A),

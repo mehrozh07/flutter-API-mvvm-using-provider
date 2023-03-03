@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:laravel_api_provider/Utils/Routes/route_names.dart';
 import 'package:laravel_api_provider/View/home_screen.dart';
 import 'package:laravel_api_provider/View/login_view.dart';
+import 'package:laravel_api_provider/View/signup_view.dart';
+import 'package:laravel_api_provider/View/splash_screen.dart';
 
 class Routes{
   static Route? onGenerateRoutes(RouteSettings settings){
     switch(settings.name){
+      case RoutesNames.splashScreen:
+        return CupertinoPageRoute(builder: (_)=> const SplashScreen());
       case RoutesNames.loginScreen:
       Map arguments = (settings.arguments??{'title': "Login"}) as Map;
         return CupertinoPageRoute(builder: (_)=> LoginView(
@@ -17,8 +21,11 @@ class Routes{
         return CupertinoPageRoute(builder: (_)=> HomeScreen(
           title: arguments['title'],
         ));
-      // case RoutesNames.orderList:
-      //   return CupertinoPageRoute(builder: (_)=> const OrderList());
+      case RoutesNames.registerScreen:
+        Map arguments = (settings.arguments??{'title': "Sign Up"}) as Map;
+        return CupertinoPageRoute(builder: (_)=> SignUpView(
+          title: arguments['title'],
+        ));
       // case RoutesNames.orderDetails:
       //   return CupertinoPageRoute(builder: (_)=> const OrderDetails());
       // case RoutesNames.mainScreen:

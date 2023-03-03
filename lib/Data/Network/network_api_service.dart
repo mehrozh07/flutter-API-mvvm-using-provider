@@ -26,9 +26,9 @@ class NetworkApiResponse extends BaseApiResponseService{
         Uri.parse(url!),
         body: data,
         // header is used while communication with json type application
-        headers: {
-          "Content-Type": "application/json"
-        }
+        // headers: {
+        //   "Content-Type": "application/json"
+        // }
       ).timeout(const Duration(seconds: 10));
       postDataJson = returnResponse(response);
     }on SocketException {
@@ -39,7 +39,7 @@ class NetworkApiResponse extends BaseApiResponseService{
 
   dynamic returnResponse(http.Response response){
     switch(response.statusCode){
-      case 201:
+      case 200:
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
       case 400:

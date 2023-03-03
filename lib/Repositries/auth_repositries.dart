@@ -3,11 +3,11 @@ import 'package:laravel_api_provider/Resources/api_end_point.dart';
 import 'package:laravel_api_provider/Utils/utils.dart';
 import '../Data/Network/network_api_service.dart';
 
-class AuthRepositry{
+class AuthRepository{
 
   BaseApiResponseService baseApiResponseService = NetworkApiResponse();
 
-  Future<void> loginApi(context, dynamic data) async{
+  Future<dynamic> loginApi(context, dynamic data) async{
     try{
       var loginApi = baseApiResponseService.getPostApiResponse(ApiEndPoint.loginUrl, data);
       return loginApi;

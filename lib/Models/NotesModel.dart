@@ -24,5 +24,4 @@ class NotesModel {
     map['body'] = body;
     return map;
   }
-
 }

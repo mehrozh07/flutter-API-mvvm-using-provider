@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:laravel_api_provider/Utils/Routes/routes.dart';
 import 'package:laravel_api_provider/View-Models/auth_view_model.dart';
+import 'package:laravel_api_provider/View-Models/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'Utils/Routes/route_names.dart';
 import 'Utils/utils.dart';
@@ -22,6 +23,7 @@ Map<int, Color> color = {
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_)=> AuthViewModel()),
+    ChangeNotifierProvider(create: (_)=> UserViewModel()),
   ],
   child: const MyApp()));
   SystemChrome.setSystemUIOverlayStyle(
@@ -52,7 +54,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch(
             primarySwatch: MaterialColor(0xffCE1567, color)).copyWith(background: Colors.white),
       ),
-      initialRoute: RoutesNames.loginScreen,
+      initialRoute: RoutesNames.splashScreen,
       onGenerateRoute: Routes.onGenerateRoutes,
     );
   }
