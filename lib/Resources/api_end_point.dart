@@ -5,7 +5,7 @@ class ApiEndPoint{
 
   static var registerUrl = "$baseUrl/api/register";
 
-  static var foodBaseApi = "https://app2.blogvali.com/api/v1/products/";
+  static var foodBaseApi = "https://api.storerestapi.com/products";
 
   static var noteBaseApi = "https://api.nstack.in/v1/todos";
 

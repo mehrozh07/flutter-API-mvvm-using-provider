@@ -22,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final descriptionController = TextEditingController();
 
-  List items = [];
   FoodViewModel foodViewModel = FoodViewModel();
 
   @override
@@ -33,9 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<AuthViewModel>(context);
+    // final auth = Provider.of<AuthViewModel>(context);
     final userAuth = Provider.of<UserViewModel>(context);
-    auth.getNote(context);
+    // auth.getNote(context);
     return SafeArea(
         child: Scaffold(
       key: scaffoldState,
@@ -64,27 +63,29 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: Title(color: Colors.black, child: Text("${widget.title}")),
       ),
-      body: ChangeNotifierProvider(
-        create: (BuildContext context) => FoodViewModel(),
+      body: ChangeNotifierProvider<FoodViewModel>(
+        create: (BuildContext context) => foodViewModel,
         child: Consumer<FoodViewModel>(
             builder: (context, snapshot, _) {
               switch(snapshot.foodList.status){
                 case Status.LOADING:
-                   const Center(child: CircularProgressIndicator());
-                   break;
+                   return const Center(child: CircularProgressIndicator());
                 case Status.ERROR:
-                  Text(snapshot.foodList.message.toString());
-                  break;
+                  debugPrint(snapshot.foodList.message.toString());
+                  return Text(snapshot.foodList.message.toString());
                 case Status.COMPLETED:
                   return ListView.builder(
-                    itemCount: snapshot.foodList.data?.ingredients?.length,
+                    itemCount: snapshot.foodList.data?.data?.length,
                       itemBuilder: (context, index){
-                    return Text("${snapshot.foodList.data?.ingredients?[index].name}");
+                      debugPrint('${snapshot.foodList.data?.data?[index].title}');
+                    return ListTile(
+                      leading: Text("${index+1}"),
+                      title: Text('${snapshot.foodList.data?.data?[index].title}'),
+                    );
                   });
                 default:
                   return const Text("Default Error");
               }
-          return const Text("Error");
         }),
       ),
     ));

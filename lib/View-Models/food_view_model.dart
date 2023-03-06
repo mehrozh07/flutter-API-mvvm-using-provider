@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:laravel_api_provider/Data/Response/api_response.dart';
-import 'package:laravel_api_provider/Models/FoodModel.dart';
+import 'package:laravel_api_provider/Models/shop_model.dart';
 import 'package:laravel_api_provider/Repositries/home_repositry.dart';
 
 class FoodViewModel extends ChangeNotifier{
 
   final myRep = HomeRepository();
 
-  ApiResponse<FoodModel> foodList = ApiResponse.loading();
+  ApiResponse<ShopModel> foodList = ApiResponse.loading();
 
-  setFoodList(ApiResponse<FoodModel> response){
+  setFoodList(ApiResponse<ShopModel> response){
     foodList = response;
     notifyListeners();
   }
@@ -18,12 +18,12 @@ class FoodViewModel extends ChangeNotifier{
 
     setFoodList(ApiResponse.loading());
 
-    myRep.getFoodList(context)?.then((value){
+    myRep.getFoodList(context).then((value){
 
       setFoodList(ApiResponse.completed(value));
 
     }).onError((error, stackTrace){
-
+      print(error.toString());
       setFoodList(ApiResponse.error(error.toString()));
 
     });
