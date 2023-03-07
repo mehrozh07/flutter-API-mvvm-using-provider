@@ -24,8 +24,8 @@ class FoodViewModel extends ChangeNotifier{
 
     }).onError((error, stackTrace){
       print(error.toString());
+      print(stackTrace);
       setFoodList(ApiResponse.error(error.toString()));
-
     });
   }
 

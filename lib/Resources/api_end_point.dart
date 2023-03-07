@@ -5,7 +5,9 @@ class ApiEndPoint{
 
   static var registerUrl = "$baseUrl/api/register";
 
-  static var foodBaseApi = "https://api.storerestapi.com/products";
+  static var shopAppBaseApi = "https://dummyjson.com/products";
+  static var addToCartProductApi = "$shopAppBaseApi/add";
+
 
   static var noteBaseApi = "https://api.nstack.in/v1/todos";
 

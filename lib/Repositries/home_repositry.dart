@@ -11,11 +11,11 @@ class HomeRepository{
   Future<ShopModel?> getFoodList(context) async{
 
     try{
-      dynamic response = await apiResponseService.getFetchApiResponse(ApiEndPoint.foodBaseApi);
+      dynamic response = await apiResponseService.getFetchApiResponse(ApiEndPoint.shopAppBaseApi);
       return response = ShopModel.fromJson(response);
     }catch(e){
       rethrow;
-      Utils.topFlushBarMessage(e.toString(), context, Colors.pinkAccent);
+      // Utils.topFlushBarMessage(e.toString(), context, Colors.pinkAccent);
     }
   }
 }
